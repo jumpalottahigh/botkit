@@ -232,12 +232,15 @@ controller.hears('prime (.*)',['direct_message', 'direct_mention', 'mention'],fu
         var number = parameter + 1;
 
         while (primes.length < 10) {
+						if(number < 2)
+							break;
 
             if (MathHelper.isPrime(number)) {
                 primes.push(number);
             }
 
-            number++;
+            number--;
+						console.log(number);
         }
 
         var reply = "";
