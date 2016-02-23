@@ -189,7 +189,7 @@ controller.hears(['fibonacci'], 'direct_message,direct_mention,mention', functio
 controller.hears(['fibonacci ([0-9]+)'], 'direct_message,direct_mention,mention', function(bot, message) {
     var parameter = parseInt(message.match[1]);
 
-    var fibonacci = calculateFibonacciUpto(parameter);
+    var fibonacci = botmath.calculateFibonacciUpto(parameter);
 
     if (fibonacci[fibonacci.length-1] !== parameter) {
         bot.reply(message, 'That is not a Fibonacci number!');
