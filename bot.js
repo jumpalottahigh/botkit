@@ -199,16 +199,6 @@ controller.hears(['fibonacci ([0-9]+)'], 'direct_message,direct_mention,mention'
     }
 });
 
-function calculateFibonacciUpto(goal) {
-    var fibonacci = [1, 1];
-
-    while (fibonacci[fibonacci.length-1] < goal) {
-        fibonacci.push(fibonacci[fibonacci.length-2] + fibonacci[fibonacci.length-1]);
-    }
-
-    return fibonacci;
-}
-
 function formatUptime(uptime) {
     var unit = 'second';
     if (uptime > 60) {
