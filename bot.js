@@ -64,7 +64,7 @@ This bot demonstrates many of the core features of Botkit:
     -> http://howdy.ai/botkit
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
+var weather = require('./weather/lib/weather.js');
 
 if (!process.env.token) {
     console.log('Error: Specify token in environment');
@@ -84,6 +84,16 @@ var bot = controller.spawn({
     token: process.env.token
 }).startRTM();
 
+controller.hears(['weather (.*)'],'direct_message,direct_mention,mention',function(bot, message) {
+   var matches = message.text.match(/weather (.*)/i);
+   var name = matches[1];
+    weather.find({search: name, degreeType: 'C'}, function(err, result) {
+     if(err) console.log(err);
+
+    bot.reply(message,'The weather in '+  result[0].location.name+ '. It is: ' + result[0].current.temperature + '.The windspeed is'+ result[0].current.windspeed +". Image is" + result[0].current.imageUrl);
+    });
+
+});
 
 controller.hears(['hello','hi'],'direct_message,direct_mention,mention',function(bot, message) {
 
