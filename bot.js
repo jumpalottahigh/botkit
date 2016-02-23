@@ -26,7 +26,7 @@ This bot demonstrates many of the core features of Botkit:
   Run your bot from the command line:
 
     set token=<MY TOKEN>
-	
+
 	node bot.js
 
 # USE THE BOT:
@@ -74,6 +74,7 @@ if (!process.env.token) {
 var MathHelper = require('./botmath.js');
 var Botkit = require('./lib/Botkit.js');
 var os = require('os');
+var botmath = require('./botmath.js');
 
 var controller = Botkit.slackbot({
     debug: true,
@@ -177,9 +178,9 @@ controller.hears(['fibonacci'], 'direct_message,direct_mention,mention', functio
 
 controller.hears(['fibonacci ([0-9]+)'], 'direct_message,direct_mention,mention', function(bot, message) {
     var parameter = parseInt(message.match[1]);
-    
+
     var fibonacci = calculateFibonacciUpto(parameter);
-    
+
     if (fibonacci[fibonacci.length-1] !== parameter) {
         bot.reply(message, 'That is not a Fibonacci number!');
     }
@@ -190,11 +191,11 @@ controller.hears(['fibonacci ([0-9]+)'], 'direct_message,direct_mention,mention'
 
 function calculateFibonacciUpto(goal) {
     var fibonacci = [1, 1];
-    
+
     while (fibonacci[fibonacci.length-1] < goal) {
         fibonacci.push(fibonacci[fibonacci.length-2] + fibonacci[fibonacci.length-1]);
     }
-    
+
     return fibonacci;
 }
 
@@ -251,3 +252,12 @@ controller.hears('prime (.*)',['direct_message', 'direct_mention', 'mention'],fu
     }
 });
 
+controller.hears('what is (.*) \\+ (.*)',['direct_message', 'direct_mention', 'mention'],function(bot,message) {
+
+	var num1 = message.match[1];
+	var num2 = message.match[2];
+
+	if (num1 != null && num2 != null) {
+		return bot.reply(message, num1 + ' + ' + num2 + ' = ' + botmath.sum(num1, num2));
+	}
+});
